@@ -163,11 +163,11 @@ void ImapSync_UI::onStdoutAvailable(){
 
 void ImapSync_UI::processFinalArgs(){
 	//Run imapsync
-	QString cmd = QString("./imapsync.pl ").append(final_args.takeFirst());
+	QString cmd = QString("%1 %2").arg("./imapsync.pl", final_args.takeFirst());
 	qDebug() << cmd;
 	process->start(cmd, QIODevice::ReadWrite | QIODevice::Text);
 	if(!process->waitForStarted()){
-		qDebug() << "executing program failed with exit code" << process->exitCode();
+		QMessageBox::critical(this, "Error", "Executing program failed (check console output)");
 	}else{
 		onStarted();
 	}
