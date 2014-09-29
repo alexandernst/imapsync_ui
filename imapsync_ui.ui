@@ -332,28 +332,28 @@
                 <item>
                  <widget class="QCheckBox" name="justfolders">
                   <property name="text">
-                   <string>Just folders (shows the transformations it will do without really doing them)</string>
+                   <string>Just folders (Do only things about folders)</string>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <widget class="QCheckBox" name="justfoldersizes">
                   <property name="text">
-                   <string>Just folders size (predict how many messages have to be synced)</string>
+                   <string>Just folders size (Exit after having printed the folder sizes)</string>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <widget class="QCheckBox" name="justconnect">
                   <property name="text">
-                   <string>Just connect</string>
+                   <string>Just connect (Just connect to both servers and print useful information)</string>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <widget class="QCheckBox" name="syncacls">
                   <property name="text">
-                   <string>Sync cacls</string>
+                   <string>Sync cacls (Synchronises acls (Access Control Lists))</string>
                   </property>
                  </widget>
                 </item>
@@ -382,7 +382,7 @@
                   </property>
                   <layout class="QGridLayout" name="gridLayout_9">
                    <item row="0" column="0">
-                    <widget class="QPlainTextEdit" name="folder"/>
+                    <widget class="QPlainTextEdit" name="include"/>
                    </item>
                   </layout>
                  </widget>
@@ -412,8 +412,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>493</width>
-           <height>132</height>
+           <width>1034</width>
+           <height>518</height>
           </rect>
          </property>
          <attribute name="label">
@@ -470,8 +470,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>98</width>
-           <height>88</height>
+           <width>1034</width>
+           <height>518</height>
           </rect>
          </property>
          <attribute name="label">

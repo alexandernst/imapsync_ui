@@ -33,6 +33,8 @@ void ImapSync_UI::sync(){
 			return;
 		}
 
+
+
 		//Run imapsync
 		process->start(imapsync, args, QIODevice::ReadWrite | QIODevice::Text);
 		if(!process->waitForStarted()){
@@ -95,6 +97,20 @@ QStringList ImapSync_UI::fetchArgs(){
 
 	if(ui->dry->isChecked()){
 		args.append("--dry");
+	}
+
+	if(ui->include->toPlainText().length() > 0){
+		QStringList include = ui->include->toPlainText().split("\n");
+		foreach (QString folder, include){
+			args.append( QString("--include ").append(folder) );
+		}
+	}
+
+	if(ui->exclude->toPlainText().length() > 0){
+		QStringList exclude = ui->exclude->toPlainText().split("\n");
+		foreach (QString folder, exclude){
+			args.append( QString("--exclude ").append(folder) );
+		}
 	}
 
 	return args;
