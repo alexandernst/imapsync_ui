@@ -9,7 +9,7 @@ As you can see, some options are still missing. I have added the basic (and most
 Please feel free to send me patches if you miss some extra options.
 
 The license is `WTFPL` so you're allowed to do whatever you want with the code. It's provided
-as-is, and I'm not responsible for any damange or data-loss.
+as-is, and I'm not responsible for any damage or data loss.
 
 Build
 =====
