@@ -7,7 +7,6 @@ ImapSync_UI::ImapSync_UI(QWidget *parent) : QMainWindow(parent), ui(new Ui::Imap
 	process = new QProcess(this);
 
 	connect(ui->sync, SIGNAL(clicked()), this, SLOT(sync()));
-
 	connect(process, SIGNAL(readyReadStandardOutput()), SLOT(onStdoutAvailable()));
 	connect(process, SIGNAL(finished(int, QProcess::ExitStatus)), SLOT(onFinished(int, QProcess::ExitStatus)));
 }
@@ -17,31 +16,39 @@ ImapSync_UI::~ImapSync_UI(){
 	delete ui;
 }
 
-
 void ImapSync_UI::sync(){
 	if(process->state() == QProcess::Running){
 		onFinished(0, QProcess::CrashExit);
 	}else{
-		QString imapsync = "echo"; //"./imapsync.pl";
-
 		//Get the args with which we're going to run imapsync
 		QStringList args = fetchArgs();
-		qDebug() << args;
-
 		if(args.isEmpty()){
 			QMessageBox::critical(this, "Error", "Missing mandatory config (host1 or host2)");
 			return;
 		}
 
-
-
-		//Run imapsync
-		process->start(imapsync, args, QIODevice::ReadWrite | QIODevice::Text);
-		if(!process->waitForStarted()){
-			qDebug() << "executing program failed with exit code" << process->exitCode();
-		}else{
-			onStarted();
+		QStringList accounts = fetchAccounts();
+		if(accounts.isEmpty()){
+			QMessageBox::critical(this, "Error", "Missing mandatory config (accounts)");
+			return;
 		}
+
+		QListIterator<QString>itr(accounts);
+		while(itr.hasNext()){
+			//Save the constructed args
+			QString cmd = args.join(" "),
+					user1 = itr.next(),
+					password1 = itr.next(),
+					user2 = itr.next(),
+					password2 = itr.next();
+
+			final_args.append(
+				QString("%1 --user1 %2 --password1 %3 --user2 %4 --password2 %5").arg(cmd, user1, password1, user2, password2)
+			);
+		}
+
+		//Start processing the final_args list
+		processFinalArgs();
 	}
 }
 
@@ -116,9 +123,54 @@ QStringList ImapSync_UI::fetchArgs(){
 	return args;
 }
 
+QStringList ImapSync_UI::fetchAccounts(){
+	QStringList lines1, lines2;
+	QStringList users, users1, users2;
+
+	if(ui->users1->toPlainText().length() > 0){
+		lines1 = ui->users1->toPlainText().split("\n");
+		foreach (QString userpass, lines1){
+			users1.append(userpass.split(";"));
+		}
+	}
+
+	if(ui->users2->toPlainText().length() > 0){
+		lines2 = ui->users2->toPlainText().split("\n");
+		foreach (QString userpass, lines2){
+			users2.append(userpass.split(";"));
+		}
+	}
+
+	if(users1.length() != users2.length()){
+		return QStringList();
+	}else{
+		QListIterator<QString>itr1(users1);
+		QListIterator<QString>itr2(users2);
+		while(itr1.hasNext() && itr2.hasNext()){
+			users.append(itr1.next()); //user1
+			users.append(itr1.next()); //password1
+			users.append(itr2.next()); //user2
+			users.append(itr2.next()); //password2
+		}
+		return users;
+	}
+}
+
 void ImapSync_UI::onStdoutAvailable(){
 	QByteArray arr = process->readAllStandardOutput();
 	ui->output->appendPlainText(QString(arr));
+}
+
+void ImapSync_UI::processFinalArgs(){
+	//Run imapsync
+	QString cmd = QString("./imapsync.pl ").append(final_args.takeFirst());
+	qDebug() << cmd;
+	process->start(cmd, QIODevice::ReadWrite | QIODevice::Text);
+	if(!process->waitForStarted()){
+		qDebug() << "executing program failed with exit code" << process->exitCode();
+	}else{
+		onStarted();
+	}
 }
 
 void ImapSync_UI::onStarted(){
@@ -130,4 +182,8 @@ void ImapSync_UI::onFinished(int, QProcess::ExitStatus){
 	qDebug() << "Finishing!";
 	process->close();
 	ui->sync->setText("Sync!");
+
+	if(final_args.length() > 0){
+		processFinalArgs();
+	}
 }

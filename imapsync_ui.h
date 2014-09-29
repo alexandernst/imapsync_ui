@@ -22,12 +22,15 @@ public slots:
 	void sync();
 	void onStdoutAvailable();
 	void onStarted();
-	void onFinished(int, QProcess::ExitStatus);
+	void onFinished(int, QProcess::ExitStatus status);
 
 private:
 	Ui::ImapSync_UI *ui;
 	QProcess *process;
 	QStringList fetchArgs();
+	QStringList fetchAccounts();
+	QStringList final_args;
+	void processFinalArgs();
 };
 
 #endif // IMAPSYNC_UI_H
