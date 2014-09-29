@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QProcess>
 #include <QDebug>
+#include <QMessageBox>
 
 namespace Ui {
 class ImapSync_UI;
@@ -20,11 +21,13 @@ public:
 public slots:
 	void sync();
 	void onStdoutAvailable();
+	void onStarted();
 	void onFinished(int, QProcess::ExitStatus);
 
 private:
 	Ui::ImapSync_UI *ui;
 	QProcess *process;
+	QStringList fetchArgs();
 };
 
 #endif // IMAPSYNC_UI_H
