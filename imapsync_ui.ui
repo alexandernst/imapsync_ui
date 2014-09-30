@@ -27,8 +27,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1034</width>
-           <height>518</height>
+           <width>1036</width>
+           <height>528</height>
           </rect>
          </property>
          <attribute name="label">
@@ -412,8 +412,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1034</width>
-           <height>518</height>
+           <width>485</width>
+           <height>127</height>
           </rect>
          </property>
          <attribute name="label">
@@ -470,8 +470,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1034</width>
-           <height>518</height>
+           <width>98</width>
+           <height>86</height>
           </rect>
          </property>
          <attribute name="label">
@@ -498,7 +498,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
-         <widget class="QProgressBar" name="progressBar">
+         <widget class="QProgressBar" name="progress">
           <property name="value">
            <number>0</number>
           </property>

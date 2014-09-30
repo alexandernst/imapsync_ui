@@ -25,6 +25,7 @@ public slots:
 	void onFinished(int, QProcess::ExitStatus status);
 
 private:
+	int nargs;
 	Ui::ImapSync_UI *ui;
 	QProcess *process;
 	QStringList fetchArgs();

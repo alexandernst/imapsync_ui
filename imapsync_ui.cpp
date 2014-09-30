@@ -47,6 +47,8 @@ void ImapSync_UI::sync(){
 			);
 		}
 
+		nargs = 0;
+
 		//Start processing the final_args list
 		processFinalArgs();
 	}
@@ -184,6 +186,10 @@ void ImapSync_UI::onFinished(int, QProcess::ExitStatus){
 	ui->sync->setText("Sync!");
 
 	if(final_args.length() > 0){
+		ui->progress->setValue( (100 * (nargs - final_args.length())) / nargs );
 		processFinalArgs();
+	}else{
+		nargs = 0;
+		ui->progress->setValue(0);
 	}
 }
