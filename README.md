@@ -13,8 +13,14 @@ Please feel free to send me patches if you miss some extra options.
 The license is `WTFPL` so you're allowed to do whatever you want with the code. It's provided
 as-is, and I'm not responsible for any damage or data loss.
 
-Build
+Building
 =====
 
 You'll need `Qt 5.x` and `cmake`, or `QtCreator`.
 There is nothing special about the code; just open the project and hit the build button.
+
+Using
+=====
+
+Place your copy of `imapsync.pl` in the same folder as this project's binary and give execute
+permissions to it (`chmod +x imapsync.pl`), then run the UI.
