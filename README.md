@@ -3,6 +3,8 @@ imapsync UI
 
 This is a UI for [imapsync](http://imapsync.lamiral.info/)
 
+Main website is hosted by GitHub [here](http://alexandernst.github.io/imapsync_ui)
+
 ![Screenshot](https://raw.githubusercontent.com/alexandernst/imapsync_ui/148c7a79641989264c39ebc6a70ed76080d4d25b/imapsync_ui.png)
 
 As you can see, some options are still missing. I have added the basic (and most used) ones.
